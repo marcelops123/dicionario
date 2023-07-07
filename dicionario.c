@@ -2,7 +2,6 @@
 #include <ctype.h> // contém funções para manipulação de caracteres.
 
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
-//Para encontrar o menor valor entre três números
 
 tNO *texto_entrada, *texto_saida; //ponteiros para uma estrutura
 size_t cont = 0;
