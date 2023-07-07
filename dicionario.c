@@ -19,13 +19,12 @@ void copiaString(char *Palavra, char *novaPalavra) { //Essa função é respons�
 }
 
 void correcaoLinha(char *linha, FILE *arqvSaida, char *opc[])
-{//Essa função recebe uma linha de texto, um arquivo de saída e um array de opções 
+{//Essa função realiza a correção ortográfica em uma linha de texto
     if (linha[0] == '\n')
     {
         fprintf(arqvSaida, "%s", linha);
         return;
-    }
-    // Irá verificar se a linha é um \n (final da linha) e adicionará o \n no arquivo de saída fazendo com que a linha seja quebrada 
+    } 
 
     char *palavra, auxPalavra[40];
     int menor, retLevn = 0;
@@ -40,7 +39,7 @@ void correcaoLinha(char *linha, FILE *arqvSaida, char *opc[])
     {
         if ((strlen(auxPalavra)) > 1)
         {
-            if (busca_binaria(vet, auxPalavra, 275502))
+            if (busca_binaria(vet, auxPalavra, 275502))//Verifica se a palavra atual está presente no dicionário, chamando a função buscaBinaria
             {
                 fprintf(arqvSaida, "%s ", palavra);
             }
@@ -80,7 +79,7 @@ void correcaoLinha(char *linha, FILE *arqvSaida, char *opc[])
 
 
 int busca_binaria(char lista[][30], char *chave, unsigned int tamanhoDaLista)
-{//Essa função implementa uma pesquisa binária em uma lista ordenada de palavras representada por uma matriz
+{//Essa função procura um elemento específico em uma lista ordenada.
     int inf = 0;                  // limite inferior (o primeiro índice de vetor em C é zero)
     int sup = tamanhoDaLista - 1; // limite superior (termina em um número a menos. 0 a 9 são 10 números)
     int meio;
@@ -97,8 +96,8 @@ int busca_binaria(char lista[][30], char *chave, unsigned int tamanhoDaLista)
     return 0; // não encontrado
 }
 
-int levenshtein (char *s1, char *s2)
-{
+int levenshtein (char *s1, char *s2)//é usado para calcular a distância entre duas strings.Fazendo o mínimo de operações 
+{// para transformar uma string na outra
     unsigned int s1len, s2len, x, y, lastdiag, olddiag;
 
     s1len = strlen(s1);
