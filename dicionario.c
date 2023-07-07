@@ -1,15 +1,16 @@
-#include "dicionario.h"
-#include <ctype.h>
+#include "dicionario.h" //é um arquivo de cabeçalho personalizado
+#include <ctype.h> // contém funções para manipulação de caracteres.
 
 #define MIN3(a, b, c) ((a) < (b) ? ((a) < (c) ? (a) : (c)) : ((b) < (c) ? (b) : (c)))
+//Para encontrar o menor valor entre três números
 
-tNO *inicio_texto, *final_texto;
+tNO *texto_entrada, *texto_saida; //ponteiros para uma estrutura
 size_t cont = 0;
 size_t i = 0;
-extern char vet[275502][30];
+extern char vet[275502][30]; // indica que a definição da variável vet é externa
 
-void copiaString(char *Palavra, char *novaPalavra) {
-    char *pAux;
+void copiaString(char *Palavra, char *novaPalavra) { //Essa função é responsável por copiar
+    char *pAux;                                     //uma string para outra, removendo \n
 
     strcpy(novaPalavra, Palavra);
     pAux = strchr(novaPalavra, '\n');
@@ -17,8 +18,8 @@ void copiaString(char *Palavra, char *novaPalavra) {
         *pAux = '\0';
 }
 
-void tratarLinha(char *linha, FILE *arqvSaida, char *opc[])
-{
+void correcaoLinha(char *linha, FILE *arqvSaida, char *opc[])
+{//Essa função recebe uma linha de texto, um arquivo de saída e um array de opções 
     if (linha[0] == '\n')
     {
         fprintf(arqvSaida, "%s", linha);
@@ -29,17 +30,17 @@ void tratarLinha(char *linha, FILE *arqvSaida, char *opc[])
     char *palavra, auxPalavra[40];
     int menor, retLevn = 0;
     char sugestao[40];
-    memset(sugestao, '\0', 40);
+    memset(sugestao, '\0', 40);//preeche
 
-    palavra = strtok(linha, " ");
+    palavra = strtok(linha, " "); //usado p/ dividir a linha em palavras
     copiaString(palavra, auxPalavra);
     printf("%s\n", auxPalavra);
 
-    while (palavra)
+    while (palavra) //percorre todas as palavras da linha
     {
         if ((strlen(auxPalavra)) > 1)
         {
-            if (BinarySearch(vet, auxPalavra, 275502))
+            if (busca_binaria(vet, auxPalavra, 275502))
             {
                 fprintf(arqvSaida, "%s ", palavra);
             }
@@ -47,12 +48,12 @@ void tratarLinha(char *linha, FILE *arqvSaida, char *opc[])
             {
                 if (strcmp(opc[3], "1") == 0)
                 {
-                    menor = liechtenstein(vet[0], auxPalavra);
+                    menor = levenshtein (vet[0], auxPalavra);
                     for (int j = 0; j < 275502; j++)
                     {
                         if (((strlen(vet[j]) - strlen(auxPalavra)) < 4) && (strlen(auxPalavra) >= 3))
                         { // Filtragem de quantidade de letras
-                            retLevn = liechtenstein(vet[j], auxPalavra);
+                            retLevn = levenshtein (vet[j], auxPalavra);
                             if (retLevn < menor)
                             {
                                 menor = retLevn;
@@ -60,7 +61,7 @@ void tratarLinha(char *linha, FILE *arqvSaida, char *opc[])
                             }
                         }
                     }
-                    if (sugestao[0] != '\0')
+                    if (sugestao[0] != '\0') // Caso exista alguma palavra correspondente no dicionário
                         fprintf(arqvSaida, "[%s(%s)] ", palavra, sugestao);
                     else
                         fprintf(arqvSaida, "%s ", palavra);
@@ -70,7 +71,7 @@ void tratarLinha(char *linha, FILE *arqvSaida, char *opc[])
             }
         }
 
-        palavra = strtok(NULL, " ");
+        palavra = strtok(NULL, " "); 
         if (palavra)
             copiaString(palavra, auxPalavra);
     }
@@ -78,8 +79,8 @@ void tratarLinha(char *linha, FILE *arqvSaida, char *opc[])
 
 
 
-int BinarySearch(char lista[][30], char *chave, unsigned int tamanhoDaLista)
-{
+int busca_binaria(char lista[][30], char *chave, unsigned int tamanhoDaLista)
+{//Essa função implementa uma pesquisa binária em uma lista ordenada de palavras representada por uma matriz
     int inf = 0;                  // limite inferior (o primeiro índice de vetor em C é zero)
     int sup = tamanhoDaLista - 1; // limite superior (termina em um número a menos. 0 a 9 são 10 números)
     int meio;
@@ -96,7 +97,7 @@ int BinarySearch(char lista[][30], char *chave, unsigned int tamanhoDaLista)
     return 0; // não encontrado
 }
 
-int liechtenstein(char *s1, char *s2)
+int levenshtein (char *s1, char *s2)
 {
     unsigned int s1len, s2len, x, y, lastdiag, olddiag;
 

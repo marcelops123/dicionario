@@ -10,10 +10,9 @@ typedef struct NO {
     struct NO *prox;
 } tNO;
 
-//void buscar(char *, tNO *);
-int BinarySearch (char lista[][30], char *chave, unsigned int tamanhoDaLista);
-int liechtenstein(char *, char *);
-void tratarLinha(char *,FILE *,char *arg[]);
+int busca_binaria (char lista[][30], char *chave, unsigned int tamanhoDaLista);
+int levenshtein (char *, char *);
+void correcaoLinha(char *,FILE *,char *arg[]);
 void carregar_texto(char);
 
 #endif

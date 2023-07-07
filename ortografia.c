@@ -1,7 +1,7 @@
 #include "dicionario.h"
 #include "dicionario.c"
 
-extern tNO *inicio_texto, *final_texto;
+extern tNO *texto_entrada, *texto_saida;
 extern size_t cont;
 FILE *arqvSaida;
 char vet[275502][30];
@@ -71,7 +71,7 @@ int main(int argc, char *argv[])
         linha[i] = '\n';
         i = 0;
 
-        tratarLinha(linha, arqvSaida, argv);
+        correcaoLinha(linha, arqvSaida, argv);
         memset(linha, '\0', 1000);
     }
     /*

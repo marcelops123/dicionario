@@ -58,6 +58,8 @@
   "files.associations": {
     "*.tsx": "typescriptreact",
     "ctype.h": "c",
-    "dicionario.h": "c"
+    "dicionario.h": "c",
+    "stdio.h": "c",
+    "string.h": "c"
   }
 }
